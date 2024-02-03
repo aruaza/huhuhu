@@ -1,0 +1,6 @@
+.main__divs{
+    display: flex;
+}
+.answer{
+    display: none;
+}
