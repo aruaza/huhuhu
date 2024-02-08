@@ -1,0 +1,1 @@
+const phoneInput=document.querySelector('#phone_inp  ut')
