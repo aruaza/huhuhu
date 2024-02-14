@@ -15,12 +15,56 @@ gmail_button.addEventListener('click',()=>{
 
 //2
 const child_block=document.querySelector(".child_block")
-let start=0
-const recursion=()=>{
-    if(start<=449){
-        start++
-        child_block.style.left=`${start}px`
+        const parentBlock=document.querySelector('.parent_block')
+        const mainWith=parentBlock.offsetWidth-child_block.offsetWidth
+        const mainHeight=parentBlock.offsetHeight-child_block.offsetHeight
+        let startW=0
+        let startH=0
+        const recursion=()=> {
+            if (startW <= mainWith) {
+                startW++
+                child_block.style.left = `${startW}px`
+                requestAnimationFrame(recursion)
+            } else if (startW >= mainHeight && startH < mainHeight){
+                startH++
+                child_block.style.top = `${startH}px`
+                requestAnimationFrame(recursion)
+            }else if(startH >= mainWith && startW< mainWith) {
+                startW++
+                child_block.style.right = `-${startW}px`
+                requestAnimationFrame(recursion)
+            }else{
+        startH++
+        child_block.style.bottom = `-${startH}px`
         requestAnimationFrame(recursion)
     }
 }
 recursion()
+
+//homework2
+const seconds=document.querySelector('#seconds')
+const startb=document.querySelector('#start')
+const resetb=document.querySelector('#reset')
+const stopb=document.querySelector('#stop')
+let count= 0
+let intervalClear
+
+function start1() {
+    clearInterval(intervalClear)
+    count++
+    seconds.innerText = count
+    intervalClear = setTimeout(start1, 1000)
+}
+function stop1(){
+    clearInterval(intervalClear)
+}
+function reset() {
+    stop1()
+    count = 0
+    seconds.innerText = count
+}
+
+startb.onclick = () => start1()
+resetb.onclick = () => reset()
+stopb.onclick = () => stop1()
+
