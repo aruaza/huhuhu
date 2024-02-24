@@ -41,3 +41,52 @@ const autoTab = (i = 0) => {
 }
 autoTab()
 
+//dz 5
+const somInput=document.querySelector('#som')
+const usdInput=document.querySelector('#usd')
+const eurInput=document.querySelector('#eur')
+
+const converted = (element, targetElement,additionalElement, current)=>{
+    element.oninput=()=>{
+        const request=new XMLHttpRequest()
+        request.open("GET","data.json")
+
+
+        request.setRequestHeader("Content-type","application/json")
+        request.send()
+
+        request.onload=()=>{
+            const data=JSON.parse(request.response)
+
+            switch (current) {
+                case 'som':
+                    targetElement.value = (element.value / data.usd).toFixed(2)
+                    additionalElement.value = (element.value / data.eur).toFixed(2)
+                    break
+                case 'usd':
+                    targetElement.value = (element.value * data.usd).toFixed(2)
+                    additionalElement.value = (element.value * 0.91).toFixed(2)
+                    break
+                case 'eur':
+                    targetElement.value = (element.value * data.eur).toFixed(2)
+                    additionalElement.value = (element.value * 1.10).toFixed(2)
+                    break
+                default:
+                    break
+            }
+        }
+    }
+}
+
+converted(somInput, usdInput, eurInput, 'som')
+converted(usdInput, somInput, eurInput, 'usd')
+converted(eurInput, somInput, usdInput, 'eur')
+
+
+
+
+
+
+
+
+
